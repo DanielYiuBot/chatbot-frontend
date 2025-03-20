@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import axios from "axios";
 
 function App() {
+  const [userInput, setUserInput] = useState("");
+  const [chatResponse, setChatResponse] = useState("");
+
+  const handleSend = async () => {
+    if (!userInput) return;
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/chat", {
+        message: userInput,
+      });
+      setChatResponse(response.data.response);
+    } catch (error) {
+      console.error("Error:", error);
+      setChatResponse("Error communicating with chatbot.");
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ padding: "20px", textAlign: "center" }}>
+      <h1>Chatbot</h1>
+      <input
+        type="text"
+        value={userInput}
+        onChange={(e) => setUserInput(e.target.value)}
+        placeholder="Type your message..."
+        style={{ width: "60%", padding: "10px", marginBottom: "10px" }}
+      />
+      <button onClick={handleSend} style={{ padding: "10px 20px", marginLeft: "10px" }}>
+        Send
+      </button>
+      <div style={{ marginTop: "20px", border: "1px solid #ccc", padding: "10px", minHeight: "50px" }}>
+        <strong>Chatbot:</strong> {chatResponse}
+      </div>
     </div>
   );
 }
