@@ -9,7 +9,7 @@ function App() {
     if (!userInput) return;
 
     try {
-      const response = await axios.post("54.83.252.35:8000/chat", {
+      const response = await axios.post("https://mooncast.jumpingcrab.com/chat", {
         message: userInput,
       });
       setChatResponse(response.data.response);
