@@ -9,7 +9,7 @@ function App() {
     if (!userInput) return;
 
     try {
-      const response = await axios.post("http://13.211.212.83:8000/chat", {
+      const response = await axios.post("http://35.94.110.73:8000/chat", {
         message: userInput,
       });
       setChatResponse(response.data.response);
